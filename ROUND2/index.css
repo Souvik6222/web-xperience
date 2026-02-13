@@ -423,31 +423,23 @@ h1 {
     background: black;
 }
 
-/* 
-   Make iframe cover the background 
-   Note: YouTube iframes have 16:9 aspect ratio usually. 
-   To mimic object-fit: cover, we make it huge and transparent to clicks.
-*/
 .bg-video {
     position: absolute;
     top: 50%;
     left: 50%;
-    /* Make it big enough to cover 16:9 on most aspect ratios */
-    min-width: 150vw;
-    min-height: 150vh;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
     transform: translate(-50%, -50%);
-    pointer-events: none;
-    /* Let hover pass through to section */
+    object-fit: cover;
     filter: brightness(0.6);
-    z-index: 1;
-    border: none;
 }
 
 .video-overlay {
     z-index: 2;
     text-align: center;
     pointer-events: none;
-    /* Let hover pass through */
     position: relative;
 }
 

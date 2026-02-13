@@ -164,8 +164,11 @@
 
     <!-- Video / Parallax Section -->
     <section class="video-parallax">
-        <!-- YouTube Player Container -->
-        <div id="yt-player" class="bg-video"></div>
+        <!-- Using high quality Pexels video for guaranteed background playback (YouTube API can fail locally) -->
+        <video autoplay muted loop playsinline class="bg-video" id="gym-video">
+            <source src="https://videos.pexels.com/video-files/4761426/4761426-uhd_2560_1440_30fps.mp4"
+                type="video/mp4">
+        </video>
         <div class="video-overlay">
             <h2>FORGE YOUR LEGACY</h2>
             <p>Hover to Unmute</p>
