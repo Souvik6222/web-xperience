@@ -506,17 +506,68 @@
         </h1>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script>
+        // Register ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 1. Car Cards Hover Effect (Keep existing)
         document.querySelectorAll('.car').forEach(car => {
             const video = car.querySelector('.car-video');
-            car.addEventListener('mouseenter', () => {
-                video.play();
-            });
+            car.addEventListener('mouseenter', () => video.play());
             car.addEventListener('mouseleave', () => {
                 video.pause();
                 video.currentTime = 0;
             });
         });
+
+        // 2. SCROLL-DRIVEN VIDEO PLAYBACK (Hero)
+        const heroVideo = document.querySelector(".hero-video video");
+
+        // Ensure video is loaded before we try to scrub it
+        heroVideo.onloadedmetadata = function () {
+            // We want the video to play through as we scroll down the hero section
+            // To make this feel right, we might need to pin the hero for a bit
+            // or just map the video duration to the scroll distance of the viewport.
+
+            // Allow GSAP to control the video current time
+            let tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".hero-video",
+                    start: "top top",
+                    end: "bottom top", // Or "+=500%" to make it a long scroll sequence
+                    scrub: 1, // Smooth scrubbing
+                    // pin: true, // Uncomment if you want the section to stay fixed while video plays
+                }
+            });
+
+            // Animate video time from 0 to total duration
+            tl.fromTo(heroVideo,
+                { currentTime: 0 },
+                { currentTime: heroVideo.duration || 10, ease: "none" }
+            );
+        };
+
+        // Fallback if metadata is already loaded (cached)
+        if (heroVideo.readyState >= 1) {
+            heroVideo.onloadedmetadata();
+        }
+
+        // 3. Simple Parallax for Record Video (Keep existing)
+        gsap.fromTo(".record video",
+            { yPercent: -10 },
+            {
+                yPercent: 10,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: ".record",
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true
+                }
+            }
+        );
     </script>
 
 </body>
