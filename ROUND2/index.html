@@ -21,6 +21,7 @@
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Splitting JS (optional, but we'll do text effect manually in CSS/JS to save imports if preferred, or use a library) -> We'll do custom -->
 </head>
 
 <body>
@@ -32,39 +33,55 @@
     <nav>
         <div class="logo">IRON & WILL</div>
         <div class="menu">
-            <a href="#">Equipment</a>
-            <a href="#">Apparel</a>
-            <a href="#">Training</a>
+            <a href="#equipment">Equipment</a>
+            <a href="#apparel">Apparel</a>
+            <a href="#supplements">Fuel</a>
+            <a href="#training">Training</a>
         </div>
-        <div class="cart-icon"><i class="fa-solid fa-bag-shopping"></i> (0)</div>
+        <div class="cart-icon"><i class="fa-solid fa-bag-shopping"></i> (2)</div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-overlay"></div>
-        <!-- High quality gym background -->
-        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop"
+        <!-- High quality gym background: Dark moody gym -->
+        <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=2670&auto=format&fit=crop"
             class="hero-bg" alt="Gym Background">
 
         <div class="hero-content">
-            <h1 class="split-text">DEFY<br><span class="outline-text">LIMITS</span></h1>
-            <p>Premium specialized equipment for the elite athlete.</p>
-            <button class="cta-btn">EXPLORE CATALOG</button>
+            <div class="hero-text-wrapper">
+                <h1 class="split-text">UNLEASH<br><span class="outline-text">POTENTIAL</span></h1>
+            </div>
+            <p>Forged in sweat. Built for greatness.</p>
+            <div class="hero-btns">
+                <button class="cta-btn primary">SHOP COLLECTION</button>
+                <button class="cta-btn secondary">WATCH VIDEO <i class="fa-solid fa-play"></i></button>
+            </div>
         </div>
     </section>
 
     <!-- Marquee -->
     <div class="marquee-container">
         <div class="marquee-content">
-            <span>POWER</span> <span>STRENGTH</span> <span>ENDURANCE</span> <span>DISCIPLINE</span>
-            <span>POWER</span> <span>STRENGTH</span> <span>ENDURANCE</span> <span>DISCIPLINE</span>
+            <span>POWER</span> <span>•</span> <span>STRENGTH</span> <span>•</span> <span>ENDURANCE</span> <span>•</span>
+            <span>DISCIPLINE</span> <span>•</span>
+            <span>POWER</span> <span>•</span> <span>STRENGTH</span> <span>•</span> <span>ENDURANCE</span> <span>•</span>
+            <span>DISCIPLINE</span> <span>•</span>
         </div>
     </div>
 
+    <!-- Intro Text / Manifesto -->
+    <section class="manifesto">
+        <div class="manifesto-text">
+            We don't just sell equipment. We engineer the tools for your transformation.
+            <span class="highlight">Every rep counts.</span> Every set matters.
+        </div>
+    </section>
+
     <!-- Product Catalog Section -->
-    <section class="catalog">
+    <section class="catalog" id="equipment">
         <div class="section-header">
-            <h2>NEW ARRIVALS</h2>
+            <h2>ELITE EQUIPMENT</h2>
             <div class="line"></div>
         </div>
 
@@ -72,69 +89,200 @@
             <!-- Product 1 -->
             <div class="product-card">
                 <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1632168936643-424a18117765?q=80&w=1934&auto=format&fit=crop"
+                    <img src="https://images.unsplash.com/photo-1620188467120-5042ed1eb5da?q=80&w=2574&auto=format&fit=crop"
                         alt="Dumbbells">
                     <div class="overlay">
-                        <button>ADD TO CART</button>
+                        <button>QUICK ADD</button>
                     </div>
+                    <div class="tag">BESTSELLER</div>
                 </div>
                 <div class="card-info">
-                    <h3>HEX PRO DUMBBELLS</h3>
-                    <p class="price">$45.00</p>
-                    <div class="rating">★★★★★</div>
+                    <div class="info-top">
+                        <h3>HEX PRO DUMBBELLS</h3>
+                        <p class="price">$45.00</p>
+                    </div>
+                    <p class="desc">Rubber encased, ergonomic handle.</p>
                 </div>
             </div>
 
             <!-- Product 2 -->
             <div class="product-card">
                 <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1596350553841-2c6d48299a91?q=80&w=1939&auto=format&fit=crop"
+                    <img src="https://images.unsplash.com/photo-1517344884509-a0c97ec11bcc?q=80&w=2574&auto=format&fit=crop"
                         alt="Kettlebell">
                     <div class="overlay">
-                        <button>ADD TO CART</button>
+                        <button>QUICK ADD</button>
                     </div>
                 </div>
                 <div class="card-info">
-                    <h3>IRON KETTLEBELL</h3>
-                    <p class="price">$65.00</p>
-                    <div class="rating">★★★★☆</div>
+                    <div class="info-top">
+                        <h3>IRON KETTLEBELL</h3>
+                        <p class="price">$65.00</p>
+                    </div>
+                    <p class="desc">Cast iron, powder coated finish.</p>
                 </div>
             </div>
 
             <!-- Product 3 -->
             <div class="product-card">
                 <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1517963879466-e925ac69aa18?q=80&w=2070&auto=format&fit=crop"
-                        alt="Protein">
+                    <img src="https://images.unsplash.com/photo-1598289431512-b97b0917affc?q=80&w=2674&auto=format&fit=crop"
+                        alt="Bench">
                     <div class="overlay">
-                        <button>ADD TO CART</button>
+                        <button>QUICK ADD</button>
                     </div>
                 </div>
                 <div class="card-info">
-                    <h3>WHEY ISOLATE GOLD</h3>
-                    <p class="price">$89.99</p>
-                    <div class="rating">★★★★★</div>
+                    <div class="info-top">
+                        <h3>ADJUSTABLE BENCH</h3>
+                        <p class="price">$249.00</p>
+                    </div>
+                    <p class="desc">Foundational strength piece.</p>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?q=80&w=2669&auto=format&fit=crop"
+                        alt="Barbell">
+                    <div class="overlay">
+                        <button>QUICK ADD</button>
+                    </div>
+                    <div class="tag">NEW</div>
+                </div>
+                <div class="card-info">
+                    <div class="info-top">
+                        <h3>OLYMPIC BAR BELL</h3>
+                        <p class="price">$199.00</p>
+                    </div>
+                    <p class="desc">Needle bearings, 20kg standard.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video / Parallax Section -->
+    <section class="video-parallax">
+        <!-- YouTube Player Container -->
+        <div id="yt-player" class="bg-video"></div>
+        <div class="video-overlay">
+            <h2>FORGE YOUR LEGACY</h2>
+            <p>Hover to Unmute</p>
+        </div>
+    </section>
+
+    <!-- Apparel Section -->
+    <section class="catalog" id="apparel">
+        <div class="section-header">
+            <h2>PERFORMANCE WEAR</h2>
+            <div class="line"></div>
+        </div>
+
+        <div class="product-grid">
+            <!-- Product 5 -->
+            <div class="product-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=2670&auto=format&fit=crop"
+                        alt="Gym Shirt">
+                    <div class="overlay">
+                        <button>QUICK ADD</button>
+                    </div>
+                </div>
+                <div class="card-info">
+                    <div class="info-top">
+                        <h3>COMPRESSION TEE</h3>
+                        <p class="price">$35.00</p>
+                    </div>
+                    <p class="desc">Sweat-wicking technology.</p>
+                </div>
+            </div>
+
+            <!-- Product 6 -->
+            <div class="product-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1515523110800-9415d13b84a8?q=80&w=2574&auto=format&fit=crop"
+                        alt="Gym Shorts">
+                    <div class="overlay">
+                        <button>QUICK ADD</button>
+                    </div>
+                </div>
+                <div class="card-info">
+                    <div class="info-top">
+                        <h3>LIFTING SHORTS</h3>
+                        <p class="price">$28.00</p>
+                    </div>
+                    <p class="desc">4-way stretch fabric.</p>
+                </div>
+            </div>
+
+            <!-- Product 7 -->
+            <div class="product-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1550345332-09e3ac987658?q=80&w=2574&auto=format&fit=crop"
+                        alt="Gym Hoodie">
+                    <div class="overlay">
+                        <button>QUICK ADD</button>
+                    </div>
+                    <div class="tag">HOT</div>
+                </div>
+                <div class="card-info">
+                    <div class="info-top">
+                        <h3>PUMP COVER HOODIE</h3>
+                        <p class="price">$55.00</p>
+                    </div>
+                    <p class="desc">Oversized fit for warmups.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Feature Section (Parallax) -->
-    <section class="features">
+    <section class="features" id="training">
         <div class="feature-img-container">
-            <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=2070&auto=format&fit=crop"
+            <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2670&auto=format&fit=crop"
                 alt="Man lifting">
         </div>
         <div class="feature-text">
+            <div class="feature-icon"><i class="fa-solid fa-dumbbell"></i></div>
             <h2>ENGINEERED<br>FOR PERFECTION</h2>
             <p>Experience the difference of biomechanically correct equipment designed to maximize your gains and
-                minimize injury.</p>
+                minimize injury. Our engineers work with pro bodybuilders to ensure every angle hits the target muscle.
+            </p>
+            <button class="cta-btn">READ OUR STORY</button>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="newsletter-content">
+            <h2>JOIN THE IRON CLUB</h2>
+            <p>Get 10% off your first order and exclusive access to drops.</p>
+            <form>
+                <input type="email" placeholder="ENTER YOUR EMAIL">
+                <button type="submit">SUBSCRIBE</button>
+            </form>
         </div>
     </section>
 
     <footer>
-        <div class="footer-logo">IRON & WILL</div>
-        <p>&copy; 2024. All Rights Reserved.</p>
+        <div class="footer-col">
+            <div class="footer-logo">IRON & WILL</div>
+            <div class="socials">
+                <i class="fa-brands fa-instagram"></i>
+                <i class="fa-brands fa-twitter"></i>
+                <i class="fa-brands fa-youtube"></i>
+            </div>
+        </div>
+        <div class="footer-links">
+            <a href="#">Shop</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+            <a href="#">FAQ</a>
+        </div>
+        <div class="copy">
+            &copy; 2024. All Rights Reserved.
+        </div>
     </footer>
 
     <script src="index.js"></script>
