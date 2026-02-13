@@ -3,104 +3,209 @@
 body {
     margin: 0;
     height: 100vh;
-    overflow: hidden;
     background: #000;
+    overflow: hidden;
     font-family: 'Outfit', sans-serif;
-
-    /* Grid Layout for the 4 sections */
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    /* Smooth transition for grid tracks */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* 
-  Switching from Absolute to Grid Layout 
-  This allows us to resize the grid tracks dynamically 
-*/
-.gallery-item {
+.x-gallery {
     position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+.gallery-item {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden;
-    transition: all 0.5s ease;
-    /* Start with a cool filter */
-    filter: grayscale(1) brightness(0.7);
+    transition: clip-path 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: clip-path;
 }
 
 .gallery-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    /* Transition for the blur/color effects */
+    transition: filter 0.6s ease, transform 0.6s ease;
 }
 
 /* 
-  HOVER EFFECT: EXPANDING GRID
-  Using :has() to detect which child is hovered and resize the grid
+   THE SKEWED 4-PART SPLIT 
 */
 
 /* Top Left */
-body:has(.gallery-item:nth-child(1):hover) {
-    grid-template-columns: 3fr 1fr;
-    grid-template-rows: 3fr 1fr;
+.item-tl {
+    clip-path: polygon(0 0, 48% 0, 50% 50%, 0 52%);
+    z-index: 1;
 }
 
 /* Top Right */
-body:has(.gallery-item:nth-child(2):hover) {
-    grid-template-columns: 1fr 3fr;
-    grid-template-rows: 3fr 1fr;
+.item-tr {
+    clip-path: polygon(48% 0, 100% 0, 100% 48%, 50% 50%);
+    z-index: 1;
 }
 
 /* Bottom Left */
-body:has(.gallery-item:nth-child(3):hover) {
-    grid-template-columns: 3fr 1fr;
-    grid-template-rows: 1fr 3fr;
+.item-bl {
+    clip-path: polygon(0 52%, 50% 50%, 52% 100%, 0 100%);
+    z-index: 1;
 }
 
 /* Bottom Right */
-body:has(.gallery-item:nth-child(4):hover) {
-    grid-template-columns: 1fr 3fr;
-    grid-template-rows: 1fr 3fr;
+.item-br {
+    clip-path: polygon(50% 50%, 100% 48%, 100% 100%, 52% 100%);
+    z-index: 1;
 }
 
 
-/* Make the hovered item colorful and zoomed in */
-.gallery-item:hover {
-    filter: grayscale(0) brightness(1.1);
-    /* The "pop" effect */
+/* 
+   HOVER: MOVING BOUNDARIES 
+   (75% Expansion)
+*/
+/* Hover TL */
+.x-gallery:has(.item-tl:hover) .item-tl {
+    clip-path: polygon(0 0, 75% 0, 75% 75%, 0 75%);
     z-index: 10;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
 }
 
+.x-gallery:has(.item-tl:hover) .item-tr {
+    clip-path: polygon(75% 0, 100% 0, 100% 75%, 75% 75%);
+}
+
+.x-gallery:has(.item-tl:hover) .item-bl {
+    clip-path: polygon(0 75%, 75% 75%, 75% 100%, 0 100%);
+}
+
+.x-gallery:has(.item-tl:hover) .item-br {
+    clip-path: polygon(75% 75%, 100% 75%, 100% 100%, 75% 100%);
+}
+
+/* Hover TR */
+.x-gallery:has(.item-tr:hover) .item-tl {
+    clip-path: polygon(0 0, 25% 0, 25% 75%, 0 75%);
+}
+
+.x-gallery:has(.item-tr:hover) .item-tr {
+    clip-path: polygon(25% 0, 100% 0, 100% 75%, 25% 75%);
+    z-index: 10;
+}
+
+.x-gallery:has(.item-tr:hover) .item-bl {
+    clip-path: polygon(0 75%, 25% 75%, 25% 100%, 0 100%);
+}
+
+.x-gallery:has(.item-tr:hover) .item-br {
+    clip-path: polygon(25% 75%, 100% 75%, 100% 100%, 25% 100%);
+}
+
+/* Hover BL */
+.x-gallery:has(.item-bl:hover) .item-tl {
+    clip-path: polygon(0 0, 75% 0, 75% 25%, 0 25%);
+}
+
+.x-gallery:has(.item-bl:hover) .item-tr {
+    clip-path: polygon(75% 0, 100% 0, 100% 25%, 75% 25%);
+}
+
+.x-gallery:has(.item-bl:hover) .item-bl {
+    clip-path: polygon(0 25%, 75% 25%, 75% 100%, 0 100%);
+    z-index: 10;
+}
+
+.x-gallery:has(.item-bl:hover) .item-br {
+    clip-path: polygon(75% 25%, 100% 25%, 100% 100%, 75% 100%);
+}
+
+/* Hover BR */
+.x-gallery:has(.item-br:hover) .item-tl {
+    clip-path: polygon(0 0, 25% 0, 25% 25%, 0 25%);
+}
+
+.x-gallery:has(.item-br:hover) .item-tr {
+    clip-path: polygon(25% 0, 100% 0, 100% 25%, 25% 25%);
+}
+
+.x-gallery:has(.item-br:hover) .item-bl {
+    clip-path: polygon(0 25%, 25% 25%, 25% 100%, 0 100%);
+}
+
+.x-gallery:has(.item-br:hover) .item-br {
+    clip-path: polygon(25% 25%, 100% 25%, 100% 100%, 25% 100%);
+    z-index: 10;
+}
+
+
+/* 
+   *** VISUAL STYLING UPDATE ***
+   1. Active Image: Clear, Bright
+   2. Others: Blurred + Solid Color Overlay Effect 
+*/
+
+/* Active Item Logic */
 .gallery-item:hover img {
-    transform: scale(1.1);
+    filter: brightness(1.1) grayscale(0);
+    /* Clear and bright */
+    transform: scale(1.05);
+    /* Slight zoom for focus */
 }
 
-/* Make non-hovered items act differently */
-body:hover .gallery-item:not(:hover) {
-    /* Crazy color shift as requested before */
-    filter: sepia(1) hue-rotate(180deg) blur(2px) opacity(0.5);
+/* Inactive Items Logic (When simply hovering the container) */
+/* The :not(:hover) selects the other 3 items */
+.x-gallery:hover .gallery-item:not(:hover) img {
+    /* 
+       This creates a "completely different color" + blur effect.
+       Using sepia + hue-rotate + high saturation makes it look like a solid color block.
+    */
+    filter: blur(8px) brightness(0.4) sepia(1) hue-rotate(190deg) saturate(5);
+    opacity: 0.8;
 }
 
 
-/* Text Overlay */
+/* Text Styling */
 .content {
-    position: fixed;
-    /* Fixed so it stays centered regardless of grid size */
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    pointer-events: none;
     z-index: 100;
-    mix-blend-mode: difference;
+    pointer-events: none;
+    mix-blend-mode: normal;
+    transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Move Text with the Intersection Point */
+.x-gallery:has(.item-tl:hover) .content {
+    top: 75%;
+    left: 75%;
+}
+
+.x-gallery:has(.item-tr:hover) .content {
+    top: 75%;
+    left: 25%;
+}
+
+.x-gallery:has(.item-bl:hover) .content {
+    top: 25%;
+    left: 75%;
+}
+
+.x-gallery:has(.item-br:hover) .content {
+    top: 25%;
+    left: 25%;
 }
 
 h1 {
-    font-size: 15vw;
+    font-size: 18vw;
     color: white;
     margin: 0;
     line-height: 0.8;
-    letter-spacing: -10px;
+    letter-spacing: -0.05em;
+    font-weight: 800;
+    text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
