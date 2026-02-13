@@ -162,7 +162,7 @@ function onYouTubeIframeAPIReady() {
     player = new YT.Player('yt-player', {
         height: '100%',
         width: '100%',
-        videoId: 'Z6dHLGa5Wuw', // Specified Video ID
+        videoId: '27qfOLy3ETg', // Updated Video ID
         playerVars: {
             'autoplay': 1,
             'controls': 0,
@@ -173,7 +173,7 @@ function onYouTubeIframeAPIReady() {
             'cc_load_policy': 0,
             'iv_load_policy': 3,
             'autohide': 0,
-            'playlist': 'Z6dHLGa5Wuw', // Required for loop
+            'playlist': '27qfOLy3ETg', // Required for loop
             'mute': 1 // Must be muted to autoplay
         },
         events: {
