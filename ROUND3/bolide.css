@@ -1,0 +1,714 @@
+/* -------------------- Base / Reset -------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, Arial, sans-serif;
+}
+
+:root {
+  /* Fluid type used in this doc */
+  --step--1: clamp(0.75rem, 0.70rem + 0.3vw, 0.9rem);
+  --step-0: clamp(0.9rem, 0.85rem + 0.4vw, 1rem);
+}
+
+body {
+  background: #000;
+  color: #fff;
+}
+
+/* Simplified Global/Font Styles */
+        .font-bug-reg {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Container simulating the backdrop and main content area */
+
+        /* 1. Dialog Container */
+        #dropdown-menu {
+            background-color: var(--color-white);
+            color: var(--color-black);
+            border-radius: var(--radius-md);
+            /* Max width set for desktop */
+            max-width: 1024px;
+            /* Use percentage width for flexibility */
+            width: 90%;
+            margin: var(--spacing-md) auto;
+            padding: var(--spacing-lg);
+            padding-top: 64px;
+            /* Space for the close button */
+            display: flex;
+            flex-direction: column;
+            /* Allow scrolling within the menu if it exceeds viewport height */
+            max-height: calc(100vh - 40px);
+            position: relative;
+            overflow-y: auto;
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+        }
+
+        /* 2. Close Button */
+        .close-button {
+            position: absolute;
+            top: var(--spacing-md);
+            left: var(--spacing-md);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .close-button svg {
+            stroke: currentColor;
+            height: 24px;
+            width: 24px;
+        }
+
+        /* 3. Main Grid Layout (Default: Desktop/Wide Screen) */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            /* Split 1/3 and 2/3 */
+            gap: 36px;
+        }
+
+        /* 4. Left Navigation Panel */
+        .nav-list {
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+         .animated-text-container {
+            font-size: 23vw;  
+            cursor: default; 
+        }
+
+        .footer-section {
+            display: flex; 
+            width: 100%;
+        }
+
+        .letter {
+            color: #000000;
+            /* padding-top: 2vw; */
+            transition: color 0.9s ease;
+        }
+
+        .animated-text-container:hover .letter {
+            color: #ffffff;
+        }
+
+        .nav-section-heading {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 6px;
+            color: var(--color-black);
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 6px 0;
+            width: 100%;
+            text-align: left;
+            color: var(--color-grey-dark);
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.15s ease-in-out;
+            background: none;
+            border: none;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--color-black);
+        }
+
+        .nav-link-text {
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            margin-right: 6px;
+        }
+
+        .nav-link.active .nav-link-text {
+            font-weight: bold;
+        }
+
+        /* 5. Right Content Panel (Current Models) */
+        .content-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 8px;
+            /* Remove fixed width on cards */
+        }
+
+        .car-card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            width: 100%;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .car-card {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            width: 100%; /* Ensure it fills the container */
+            position: relative;
+            border-radius: var(--radius-md);
+            aspect-ratio: 16/7;
+            /* Removed the fixed width of 512px */
+            overflow: hidden;
+            border-radius: 16px;
+            cursor: pointer;
+        }
+
+        /* Other card styles... */
+        .card-image-wrapper {
+            position: absolute; /* Changed from relative for better scaling in car-card */
+            inset: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        .card-image {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            vertical-align: middle;
+            transition: opacity 0.4s ease;
+        }
+
+        .card-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            pointer-events: none;
+            display: block;
+            transition: opacity 0.4s ease;
+        }
+
+        .car-card:hover .card-video {
+            opacity: 1;
+        }
+
+        .car-card:hover .card-image {
+            opacity: 0;
+        }
+
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+            opacity: 0.7;
+        }
+
+        .card-title {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            color: white;
+            font-size: 1.4rem;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        /* 🎯 RESPONSIVENESS (Media Query) 🎯 */
+        /* Change layout for screens smaller than 768px (e.g., tablet/mobile) */
+        @media (max-width: 768px) {
+
+            /* Stack the two columns on top of each other */
+            .main-grid {
+                grid-template-columns: 1fr; /* Single column layout */
+                gap: 24px; /* Slightly reduced gap */
+            }
+            
+            /* Give the navigation panel more breathing room */
+            .nav-list {
+                gap: 24px;
+            }
+
+            /* Make headings a bit larger on smaller screens for better readability */
+            .nav-section-heading {
+                font-size: 0.8rem;
+            }
+
+            /* The content panel now takes up the full width, making the cards stack correctly */
+            .content-panel {
+                margin-top: 0; /* Align with other content */
+            }
+            
+            /* Increase padding for the main menu to feel less cramped */
+             #dropdown-menu {
+                padding: var(--spacing-lg);
+                padding-top: 60px;
+            }
+
+            /* Make the Close button more prominent/accessible near the edge */
+            .close-button {
+                top: 15px;
+                left: 15px;
+            }
+        }
+
+#dropdown-menu{
+    display: none;
+}
+.menu:hover #dropdown-menu{
+    display: flex;
+}
+#dropdown-menu {
+  position: absolute;
+  top: 0px; /* Adjust to your layout */
+  left: 0;
+  padding: 2vw;
+  padding-top: 8vw;
+  border-radius: 15px;
+  width: 100%;
+  background: white;
+  color: black;
+  /* opacity: 0; */
+  /* visibility: hidden; */
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 5;
+}
+
+#dropdown-menu .close-button {
+  position: absolute;
+  top: 15px;
+  
+  background: transparent;
+  border: none;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+}
+/* Link underline animation */
+ 
+/* Utility */
+img,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.white-logo {
+  filter: invert(1) brightness(200%);
+}
+
+svg {
+  width: clamp(80px, 9vw, 160px);
+  height: auto;
+}
+
+/* -------------------- Header / Nav -------------------- */
+.navbar {
+  position: absolute;
+  inset: 40px auto auto 40px; /* matches var(--edge) intent without extra var */
+  width: calc(100% - 80px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 1vw, 20px);
+}
+
+.up,
+.down {
+  width: 21px;
+  margin-bottom: 5px;
+  height: 1px;
+  background: #fff;
+}
+
+.store {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 1vw, 16px);
+}
+
+/* -------------------- Hero -------------------- */
+.hero-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.hero-video video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Overlay bits in hero */
+.solitaire {
+  position: absolute;
+  top: 28vh;
+  left: 20vw;
+  right: clamp(12px, 6vw, 20vw);
+  display: flex;
+  z-index: 5;
+}
+
+.solitaire img {
+  width: min(60vw, 800px);
+  height: auto;
+}
+
+.line {
+  position: absolute;
+  top: 60vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.75rem;
+  font-size: var(--step-0);
+  font-variant: small-caps;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
+}
+
+.discover {
+  position: absolute;
+  top: 66vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--step--1);
+  font-variant: small-caps;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 10px 16px;
+  border: 1px solid #fff;
+  border-radius: 30px;
+  transition: color .3s ease, background-color .3s ease, border-color .3s ease;
+}
+
+.discover:hover {
+  cursor: pointer;
+  color: #000;
+  background: #fff;
+}
+
+/* -------------------- Footer -------------------- */
+.footer {
+  background: #000;
+  padding: 60px 40px 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.one {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #333;
+}
+
+.col {
+  flex: 1 1 260px;
+  padding: 0 15px;
+}
+
+.col p {
+  margin-bottom: 10px;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: #ccc;
+}
+
+#grey {
+  color: #888;
+  font-weight: 600;
+  margin-bottom: 15px;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.two {
+  margin-bottom: 20px;
+}
+
+.two p {
+  font-size: var(--step--1);
+  color: #888;
+}
+
+.three {
+  margin-bottom: 30px;
+}
+
+.three p {
+  font-size: 0.8rem;
+  color: #666;
+  line-height: 1.7;
+}
+
+.four {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.four img {
+  width: 30px;
+  height: 30px;
+}
+
+.five {
+  position: absolute;
+  top: 60px;
+  right: 40px;
+}
+
+.five h1 {
+  font-size: clamp(22px, 2.2vw, 32px);
+  color: #fff;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+/* Bugatti small mark toggling */
+.bugatti-b {
+  display: none;
+}
+.bugatti-b svg {
+  width: 50px;
+}
+
+/* -------------------- Media queries -------------------- */
+
+/* Large tablets / small laptops */
+@media (max-width: 1200px) {
+  .solitaire { top: 26vh; right: 8vw; }
+  .line { top: 58vh; }
+  .discover { top: 64vh; }
+}
+
+/* Tablets */
+@media (max-width: 992px) {
+  .solitaire img { width: 70vw; }
+  .line { top: 56vh; font-size: var(--step--1); }
+  .discover { top: 62vh; padding: 8px 14px; }
+}
+
+/* Large phones */
+@media (max-width: 768px) {
+  .navbar {
+    inset: 16px 16px auto 16px;
+    width: calc(100% - 32px);
+  }
+
+  .bugatti-b { display: block; }
+  .logo { display: none; }
+
+  svg { width: clamp(72px, 18vw, 120px); }
+
+  .hero-video { aspect-ratio: 9/16; }
+
+  .solitaire {
+    top: 18vh;
+    right: 50%;
+    transform: translateX(50%);
+  }
+
+  .solitaire img { width: 82vw; }
+
+  .line {
+    top: 66vh;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+
+  .discover { top: 74vh; }
+
+  .footer { padding: 40px 20px 20px; }
+
+  .five {
+    position: static;
+    margin-top: 16px;
+    text-align: left;
+  }
+}
+
+/* Small phones */
+@media (max-width: 576px) {
+  .line { font-size: 0.75rem; padding: 0 10px; }
+  .bugatti-b { display: block; }
+  .logo { display: none; }
+  .discover { padding: 8px 12px; }
+
+  .col { flex-basis: 100%; padding: 0; }
+}
+
+/* -------------------- Motion accessibility -------------------- */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+.animated-text-container {
+            font-size: 23vw;  
+            cursor: default; 
+        }
+
+        .footer-section {
+            display: flex; 
+            width: 100%;
+        }
+
+        .letter {
+            color: #000000;
+            /* padding-top: 2vw; */
+            transition: color 0.9s ease;
+        }
+
+        .animated-text-container:hover .letter {
+            color: #ffffff;
+        }
+        .vision{
+          position: relative;
+        }
+        .vision-text{
+          position: absolute;
+          z-index: 1;
+          top: 25vw;
+          left: 5vw;
+          font-size: 1vw;
+        }
+
+a{
+  text-decoration: none;
+  color: white;
+}
+.performance-container h1{
+  font-size: 4vw;
+  margin: 2vw;
+}        
+.spec-table{
+  margin-left: 2vw;
+  margin-right: 2vw;
+  border: 1px solid gray;
+  display: flex;
+  flex-direction: column;
+  /* padding: 1vw; */
+  
+}
+.spec-row{
+  display: flex;
+  /* border-bottom: 1px solid grey; */
+  gap: 25vw;
+}
+hr {
+  border: 0.01px solid grey;
+}
+    
+.spec-value{
+  font-size: 7vw;
+}
+.aerodynamics{
+  position: relative;
+}
+.aerodynamics-text{
+  position: absolute;
+  z-index: 1;
+  top: 25vw;
+  font-size: 1vw;
+  right: 5vw;
+}
+.aerodynamic1-text{
+  position: absolute;
+  z-index: 1;
+  top: 15vw;
+  font-size: 1vw;
+  left: 5vw;
+}
+.intirior1 {
+  width: 100%;
+  position: relative;
+}
+.intirior1 img {
+  width: 100%;
+}
+.intirior1-text{
+  position: absolute;
+  z-index: 10;
+  top: 25vw;
+  font-size: 1vw;
+  right: 5vw;
+}
+.intirior2 {
+  width: 100%;
+  position: relative;
+}
+.intirior2 img {
+  width: 100%;
+}
+.intirior2-text{
+  position: absolute;
+  z-index: 10;
+  top: 35vw;
+  font-size: 1vw;
+  left: 5vw;
+}
+.intirior3 {
+  width: 100%;
+  position: relative;
+}
+.intirior3 img {
+  width: 100%;
+}
+.intirior3-text{
+  position: absolute;
+  z-index: 10;
+  top: 30vw;
+  font-size: 1vw;
+  right: 5vw;
+}
+.intirior4 {
+  width: 100%;
+  position: relative;
+}
+.intirior4 img {
+  width: 100%;
+}
+.intirior4-text{
+  position: absolute;
+  z-index: 10;
+  top: 25vw;
+  font-size: 1vw;
+  left: 5vw;
+}

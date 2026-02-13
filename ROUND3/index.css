@@ -1,0 +1,1060 @@
+/* -------------------- Base / Reset -------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, Arial, sans-serif;
+}
+
+:root {
+    /* Fluid type + spacing */
+    --step--1: clamp(0.75rem, 0.70rem + 0.3vw, 0.9rem);
+    --step-0: clamp(0.9rem, 0.85rem + 0.4vw, 1rem);
+    --step-1: clamp(1.1rem, 1rem + 0.6vw, 1.25rem);
+    --step-2: clamp(1.4rem, 1.2rem + 0.8vw, 1.75rem);
+    --step-3: clamp(1.9rem, 1.6rem + 1.2vw, 2.5rem);
+    --step-4: clamp(2.6rem, 2rem + 1.8vw, 3.5rem);
+    --radius: 15px;
+    --gap: clamp(0.6rem, 0.5rem + 0.8vw, 2rem);
+    --edge: clamp(12px, 2vw, 40px);
+}
+
+body {
+    background: #000;
+    color: #fff;
+}
+
+ /* Simplified Global/Font Styles */
+        .font-bug-reg {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Container simulating the backdrop and main content area */
+
+        /* 1. Dialog Container */
+        #dropdown-menu {
+            background-color: var(--color-white);
+            color: var(--color-black);
+            border-radius: var(--radius-md);
+            /* Max width set for desktop */
+            max-width: 1024px;
+            /* Use percentage width for flexibility */
+            width: 90%;
+            margin: var(--spacing-md) auto;
+            padding: var(--spacing-lg);
+            padding-top: 64px;
+            /* Space for the close button */
+            display: flex;
+            flex-direction: column;
+            /* Allow scrolling within the menu if it exceeds viewport height */
+            max-height: calc(100vh - 40px);
+            position: relative;
+            overflow-y: auto;
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+        }
+
+        /* 2. Close Button */
+        .close-button {
+            position: absolute;
+            top: var(--spacing-md);
+            left: var(--spacing-md);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .close-button svg {
+            stroke: currentColor;
+            height: 24px;
+            width: 24px;
+        }
+
+        /* 3. Main Grid Layout (Default: Desktop/Wide Screen) */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            /* Split 1/3 and 2/3 */
+            gap: 36px;
+        }
+
+        /* 4. Left Navigation Panel */
+        .nav-list {
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+         .animated-text-container {
+            font-size: 23vw;  
+            cursor: default; 
+        }
+
+        .footer-section {
+            display: flex; 
+            width: 100%;
+        }
+
+        .letter {
+            color: #000000;
+            /* padding-top: 2vw; */
+            transition: color 0.9s ease;
+        }
+
+        .animated-text-container:hover .letter {
+            color: #ffffff;
+        }
+
+        .nav-section-heading {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 6px;
+            color: var(--color-black);
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 6px 0;
+            width: 100%;
+            text-align: left;
+            color: var(--color-grey-dark);
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.15s ease-in-out;
+            background: none;
+            border: none;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--color-black);
+        }
+
+        .nav-link-text {
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            margin-right: 6px;
+        }
+
+        .nav-link.active .nav-link-text {
+            font-weight: bold;
+        }
+
+        /* 5. Right Content Panel (Current Models) */
+        .content-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 8px;
+            /* Remove fixed width on cards */
+        }
+
+        .car-card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            width: 100%;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .car-card {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            width: 100%; /* Ensure it fills the container */
+            position: relative;
+            border-radius: var(--radius-md);
+            aspect-ratio: 16/7;
+            /* Removed the fixed width of 512px */
+            overflow: hidden;
+            border-radius: 16px;
+            cursor: pointer;
+        }
+
+        /* Other card styles... */
+        .card-image-wrapper {
+            position: absolute; /* Changed from relative for better scaling in car-card */
+            inset: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        .card-image {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            vertical-align: middle;
+            transition: opacity 0.4s ease;
+        }
+
+        .card-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            /* pointer-events: none; */
+            display: block;
+            transition: opacity 0.4s ease;
+        }
+
+        .car-card:hover .card-video {
+            opacity: 1;
+        }
+
+        .car-card:hover .card-image {
+            opacity: 0;
+        }
+
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+            opacity: 0.7;
+        }
+
+        .card-title {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            color: white;
+            font-size: 1.4rem;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        /* 🎯 RESPONSIVENESS (Media Query) 🎯 */
+        /* Change layout for screens smaller than 768px (e.g., tablet/mobile) */
+        @media (max-width: 768px) {
+
+            /* Stack the two columns on top of each other */
+            .main-grid {
+                grid-template-columns: 1fr; /* Single column layout */
+                gap: 24px; /* Slightly reduced gap */
+            }
+            
+            /* Give the navigation panel more breathing room */
+            .nav-list {
+                gap: 24px;
+            }
+
+            /* Make headings a bit larger on smaller screens for better readability */
+            .nav-section-heading {
+                font-size: 0.8rem;
+            }
+
+            /* The content panel now takes up the full width, making the cards stack correctly */
+            .content-panel {
+                margin-top: 0; /* Align with other content */
+            }
+            
+            /* Increase padding for the main menu to feel less cramped */
+             #dropdown-menu {
+                padding: var(--spacing-lg);
+                padding-top: 60px;
+            }
+
+            /* Make the Close button more prominent/accessible near the edge */
+            .close-button {
+                top: 15px;
+                left: 15px;
+            }
+        }
+
+
+
+a {
+  position: relative; /* <-- put this back */
+  text-decoration: none;
+  color: white;
+  margin-right: 1.1vw;
+}
+
+a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 0.5px;
+  width: 100%;
+  background: white;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease-out;
+}
+
+a:hover::after {
+  transform: scaleX(1);
+}
+
+a:not(:hover)::after {
+  transform-origin: right; 
+  transform: scaleX(0);
+}
+
+/* Utility */
+img,
+video {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.white-logo,
+#text,
+.italic {
+    filter: invert(1) brightness(200%);
+}
+
+svg {
+    width: clamp(80px, 9vw, 160px);
+    height: auto;
+}
+
+/* -------------------- Header / Nav -------------------- */
+.navbar {
+    position: absolute;
+    inset: var(--edge) auto auto var(--edge);
+    width: calc(100% - var(--edge)*2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    gap: clamp(8px, 1vw, 20px);
+}
+
+.up,
+.down {
+    width: 21px;
+    margin-bottom: 5px;
+    height: 1px;
+    background: #fff;
+}
+
+.store {
+    display: flex;
+    align-items: center;
+    gap: clamp(8px, 1vw, 16px);
+}
+
+/* -------------------- Hero -------------------- */
+.hero-video {
+    position: relative;
+    width: 100%;
+    /* 16:9 fallback frame with object-fit video inside */
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+}
+
+.hero-video video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Overlay bits in hero */
+.solitaire {
+    position: absolute;
+    top: 28vh;
+    left: 20vw;
+    right: clamp(12px, 6vw, 20vw);
+    display: flex;
+    z-index: 5;
+}
+
+.solitaire img {
+    width: min(60vw, 800px);
+    height: auto;
+}
+
+.line {
+    position: absolute;
+    top: 60vh;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.75rem;
+    font-size: var(--step-0);
+    font-variant: small-caps;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
+}
+
+.discover {
+    position: absolute;
+    top: 66vh;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--step--1);
+    font-variant: small-caps;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 10px 16px;
+    border: 1px solid #fff;
+    border-radius: 30px;
+    transition: color .3s ease, background-color .3s ease, border-color .3s ease;
+}
+
+.discover:hover {
+    cursor: pointer;
+    color: #000;
+    background: #fff;
+}
+
+/* -------------------- Record section -------------------- */
+.record {
+    position: relative;
+    width: 100%;
+    margin-top: clamp(16px, 4vw, 48px);
+    border-radius: 2vw;
+    overflow: hidden;
+    aspect-ratio: 21 / 9;
+    /* responsive height */
+}
+
+.record video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Text overlay on record */
+.record-txt {
+    position: absolute;
+    left: clamp(16px, 7vw, 120px);
+    bottom: clamp(16px, 10vh, 24vh);
+    display: flex;
+    gap: clamp(16px, 5vw, 80px);
+    color: #fff;
+}
+
+.bigger p {
+    font-size: var(--step-4);
+    font-variant: small-caps;
+    text-transform: uppercase;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
+}
+
+.mid {
+    padding: 0.9vw;
+    margin-left: clamp(0px, 10vw, 120px);
+}
+
+.mid p {
+    font-family: 'Share Tech Mono', ui-monospace, monospace;
+}
+
+.small {
+    padding: 0.9vw;
+}
+
+.small a {
+    color: #fff;
+    font-variant: small-caps;
+    text-transform: uppercase;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
+}
+
+/* -------------------- Mansion / Cards -------------------- */
+.mansion {
+    margin: 25vh 0 0 5vw;
+}
+
+.mansion p {
+    color: #fff;
+    font-size: var(--step-4);
+    font-weight: 600;
+}
+
+.history {
+    width: min(400px, 90vw);
+    height: auto;
+    aspect-ratio: 16/10;
+    border-radius: 10px;
+}
+
+.la {
+    margin-top: 5vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(12px, 2.5vw, 28px);
+}
+
+.three {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    color: #fff;
+}
+
+.three p {
+    font-size: var(--step-2);
+    font-variant: small-caps;
+    text-transform: uppercase;
+}
+
+.three a {
+    color: #fff;
+    font-variant: small-caps;
+    text-transform: uppercase;
+    font-family: monospace;
+}
+
+/* -------------------- Cursive band -------------------- */
+.cursive {
+    width: 95%;
+    margin: 15vh auto;
+}
+
+.italic {
+    width: 100%;
+}
+
+/* -------------------- Hyper heading -------------------- */
+.Hyper {
+    color: #fff;
+    font-size: var(--step-4);
+    font-weight: 600;
+    font-variant: small-caps;
+    text-transform: uppercase;
+    font-family: monospace;
+    margin-left: 5vw;
+}
+
+/* -------------------- Cards grid -------------------- */
+.container {
+    width: 90%;
+    margin: 0 auto 8vh;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--gap);
+    padding-bottom: 8vh;
+    border: 1px solid #444;
+    border-radius: var(--radius);
+}
+
+.car {
+    grid-column: span 6; 
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+/* Container for image & video */
+.media-wrapper {
+  width: 100%;
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+/* Default image */
+.car-img {
+  width: 100%;
+  display: block;
+  border-radius: 15px;
+  transition: opacity .4s ease;
+}
+
+/* Video (hidden default) */
+.car-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .4s ease;
+}
+
+/* On hover → fade video in */
+.car:hover .car-video {
+  opacity: 1;
+}
+
+/* On hover → fade image out (optional, smoother effect) */
+.car:hover .car-img {
+  opacity: 0;
+}
+
+
+.main-img {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.main-img img {
+    width: 100%;
+    border-radius: var(--radius);
+}
+
+.timeless {
+    position: absolute;
+    top: 3vh;
+    left: var(--gap);
+}
+
+.timeless p {
+    color: #fff;
+    text-transform: uppercase;
+    font-family: monospace;
+}
+
+.turbo {
+    position: absolute;
+    top: 6vh;
+    left: var(--gap);
+}
+
+.learn {
+    position: absolute;
+    bottom: 2vh;
+    left: var(--gap);
+}
+
+.learn a {
+    color: #fff;
+    font-variant: small-caps;
+    text-transform: uppercase;
+    font-family: monospace;
+}
+
+.pin {
+    color: #fff;
+    font-variant: small-caps;
+    text-transform: uppercase;
+    padding: 3vw;
+    margin-left: 2vw;
+    font-size: var(--step-1);
+}
+
+/* -------------------- Feature split (Bugatti cell) -------------------- */
+.bugatti-cell {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    width: 90%;
+    margin: 0 auto 5vh;
+    border: 1px solid #444;
+    border-radius: var(--radius);
+    overflow: hidden;
+    min-height: clamp(380px, 60vh, 720px);
+}
+
+.image {
+    width: 50%;
+}
+
+.image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-top-left-radius: var(--radius);
+    border-bottom-left-radius: var(--radius);
+}
+
+.bugatti-text {
+    color: #fff;
+    padding: clamp(16px, 4vw, 48px);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.bugatti-text h1 {
+    font-size: var(--step-4);
+    font-weight: 400;
+    font-variant: small-caps;
+    text-transform: uppercase;
+    font-family: monospace;
+}
+
+.bugatti-text a {
+    color: #fff;
+    font-size: var(--step-0);
+    font-variant: small-caps;
+    text-transform: uppercase;
+    font-family: monospace;
+}
+
+/* -------------------- Footer gallery -------------------- */
+.footer-img {
+    width: 90%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: clamp(8px, 1.2vw, 20px);
+    border: 1px solid #666;
+    padding: var(--gap);
+    border-radius: var(--radius);
+}
+
+.footer-img img {
+    grid-column: span 4;
+    /* 3-up desktop */
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    border-radius: var(--radius);
+}
+
+/* -------------------- Footer -------------------- */
+.footer {
+    background: #000;
+    padding: 60px 40px 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.one {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #333;
+}
+
+.col {
+    flex: 1 1 260px;
+    padding: 0 15px;
+}
+
+.col p {
+    margin-bottom: 10px;
+    font-size: var(--step--1);
+    line-height: 1.5;
+    color: #ccc;
+}
+
+#grey {
+    color: #888;
+    font-weight: 600;
+    margin-bottom: 15px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.two {
+    margin-bottom: 20px;
+}
+
+.two p {
+    font-size: var(--step--1);
+    color: #888;
+}
+
+.three {
+    margin-bottom: 30px;
+}
+
+.three p {
+    font-size: 0.8rem;
+    color: #666;
+    line-height: 1.7;
+}
+
+.four {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.four img {
+    width: 30px;
+    height: 30px;
+}
+
+.five {
+    position: absolute;
+    top: 60px;
+    right: 40px;
+}
+
+.five h1 {
+    font-size: clamp(22px, 2.2vw, 32px);
+    color: #fff;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+.bugatti-b{
+        display: none;
+         
+    }
+    .bugatti-b svg{
+        width: 50px;
+    }
+
+/* -------------------- Media queries -------------------- */
+
+/* Large tablets / small laptops */
+@media (max-width: 1200px) {
+    .solitaire {
+        top: 26vh;
+        right: 8vw;
+    }
+
+    .line {
+        top: 58vh;
+    }
+
+    .discover {
+        top: 64vh;
+    }
+    
+}
+
+/* Tablets */
+@media (max-width: 992px) {
+    .solitaire img {
+        width: 70vw;
+    }
+      
+
+    .line {
+        top: 56vh;
+        font-size: var(--step--1);
+    }
+
+    .discover {
+        top: 62vh;
+        padding: 8px 14px;
+    }
+
+    .record {
+        aspect-ratio: 16/9;
+        border-radius: 18px;
+    }
+
+    .record-txt {
+        left: 5vw;
+        bottom: 12vh;
+        gap: 6vw;
+    }
+
+    .container {
+        grid-template-columns: repeat(8, 1fr);
+    }
+
+    .car {
+        grid-column: span 8;
+    }
+
+    /* 1-up */
+    .footer-img img {
+        grid-column: span 6;
+    }
+
+    /* 2-up */
+
+    .bugatti-cell {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .image,
+    .image img {
+        width: 100%;
+        height: auto;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
+
+/* Large phones */
+@media (max-width: 768px) {
+    .navbar {
+        inset: 16px 16px auto 16px;
+        width: calc(100% - 32px);
+    }
+     .bugatti-b{
+        display: block;
+    }
+    .logo{
+        display: none;
+    }
+
+    svg {
+        width: clamp(72px, 18vw, 120px);
+    }
+
+    .hero-video {
+        aspect-ratio: 9/16;
+    }
+
+    /* tall hero on phones */
+    .solitaire {
+        top: 18vh;
+        right: 50%;
+        transform: translateX(50%);
+    }
+
+    .solitaire img {
+        width: 82vw;
+    }
+
+    .line {
+        top: 66vh;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+    }
+
+    .discover {
+        top: 74vh;
+    }
+
+    .record {
+        aspect-ratio: 4/3;
+        border-radius: 14px;
+    }
+
+    .record-txt {
+        position: static;
+        padding: 16px;
+        gap: 24px;
+        flex-direction: column;
+    }
+
+    .mansion {
+        margin: 12vh 0 0 5vw;
+    }
+
+    .history {
+        width: 100%;
+    }
+
+    .footer {
+        padding: 40px 20px 20px;
+    }
+
+    .five {
+        position: static;
+        margin-top: 16px;
+        text-align: left;
+    }
+}
+
+/* Small phones */
+@media (max-width: 576px) {
+    .line {
+        font-size: 0.75rem;
+        padding: 0 10px;
+    }
+     .bugatti-b{
+        display: block;
+    }
+    .logo{
+        display: none;
+    }
+
+    .discover {
+        padding: 8px 12px;
+    }
+
+    .bigger p {
+        font-size: var(--step-3);
+    }
+
+    .pin {
+        padding: 16px;
+        margin-left: 0;
+        font-size: var(--step-0);
+    }
+
+    .footer-img {
+        padding: 10px;
+    }
+
+    .footer-img img {
+        grid-column: span 12;
+    }
+
+    /* 1-up */
+    .col {
+        flex-basis: 100%;
+        padding: 0;
+    }
+}
+
+/* -------------------- Motion accessibility -------------------- */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+#dropdown-menu{
+    display: none;
+}
+.menu:hover #dropdown-menu{
+    display: flex;
+}
+#dropdown-menu {
+  position: absolute;
+  top: 0px; /* Adjust to your layout */
+  left: 0;
+  padding: 2vw;
+  padding-top: 8vw;
+  border-radius: 15px;
+  width: 100%;
+  background: white;
+  color: black;
+  /* opacity: 0; */
+  /* visibility: hidden; */
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 5;
+}
+
+#dropdown-menu .close-button {
+  position: absolute;
+  top: 15px;
+  
+  background: transparent;
+  border: none;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+}
