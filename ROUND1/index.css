@@ -175,8 +175,11 @@ body {
     transform: translate(-50%, -50%);
     z-index: 100;
     pointer-events: none;
-    mix-blend-mode: normal;
+    mix-blend-mode: difference;
+    /* KEY: Creates the split color effect */
     transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    text-align: left;
+    /* Align text like the reference */
 }
 
 /* Move Text with the Intersection Point */
@@ -201,11 +204,23 @@ body {
 }
 
 h1 {
-    font-size: 18vw;
+    font-size: 20vw;
+    /* Even larger */
     color: white;
     margin: 0;
     line-height: 0.8;
     letter-spacing: -0.05em;
     font-weight: 800;
-    text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    /* Remove shadow for clean blend mode */
+    text-shadow: none;
+}
+
+.subtitle {
+    font-size: 2vw;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
 }
