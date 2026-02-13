@@ -6,103 +6,100 @@ body {
     overflow: hidden;
     background: #000;
     font-family: 'Outfit', sans-serif;
+
+    /* Grid Layout for the 4 sections */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    /* Smooth transition for grid tracks */
 }
 
-.gallery {
+/* 
+  Switching from Absolute to Grid Layout 
+  This allows us to resize the grid tracks dynamically 
+*/
+.gallery-item {
     position: relative;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
+    transition: all 0.5s ease;
+    /* Start with a cool filter */
+    filter: grayscale(1) brightness(0.7);
 }
 
-.gallery>img {
-    position: absolute;
-    top: 0;
-    left: 0;
+.gallery-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: all 0.4s ease-out;
-    /* Smooth transition */
-    filter: brightness(0.6) saturate(0);
-    /* Start darker and black/white */
+    transition: transform 0.5s ease;
+}
+
+/* 
+  HOVER EFFECT: EXPANDING GRID
+  Using :has() to detect which child is hovered and resize the grid
+*/
+
+/* Top Left */
+body:has(.gallery-item:nth-child(1):hover) {
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: 3fr 1fr;
+}
+
+/* Top Right */
+body:has(.gallery-item:nth-child(2):hover) {
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 3fr 1fr;
+}
+
+/* Bottom Left */
+body:has(.gallery-item:nth-child(3):hover) {
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: 1fr 3fr;
+}
+
+/* Bottom Right */
+body:has(.gallery-item:nth-child(4):hover) {
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 1fr 3fr;
+}
+
+
+/* Make the hovered item colorful and zoomed in */
+.gallery-item:hover {
+    filter: grayscale(0) brightness(1.1);
+    /* The "pop" effect */
     z-index: 10;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
 }
 
-/* 
-  The 4-Part Split via Clip-Path 
-  This creates 4 distinct triangular/trapezoidal regions meeting at center
-*/
-/* Top Quadrant */
-.gallery>img:nth-child(1) {
-    clip-path: polygon(0 0, 100% 0, 50% 50%);
+.gallery-item:hover img {
+    transform: scale(1.1);
 }
 
-/* Right Quadrant */
-.gallery>img:nth-child(2) {
-    clip-path: polygon(100% 0, 100% 100%, 50% 50%);
-}
-
-/* Bottom Quadrant */
-.gallery>img:nth-child(3) {
-    clip-path: polygon(100% 100%, 0 100%, 50% 50%);
-}
-
-/* Left Quadrant */
-.gallery>img:nth-child(4) {
-    clip-path: polygon(0 100%, 0 0, 50% 50%);
+/* Make non-hovered items act differently */
+body:hover .gallery-item:not(:hover) {
+    /* Crazy color shift as requested before */
+    filter: sepia(1) hue-rotate(180deg) blur(2px) opacity(0.5);
 }
 
 
-/* 
-  HOVER EFFECT: COLOR CHANGE 
-  When you hover ONE image:
-  1. It becomes full color and bright.
-  2. The OTHERS shift to distinct solid colors (fake "different colors" effect with filters/overlays)
-*/
-
-/* The hovered image lights up */
-.gallery>img:hover {
-    filter: brightness(1.2) saturate(1.2);
-    z-index: 20;
-    /* Bring forward slightly if needed */
-    transform: scale(1.02);
-    /* Slight pop */
-}
-
-/* When hovering ANY image in .gallery, affect the NON-hovered siblings */
-.gallery:hover>img:not(:hover) {
-    /* 
-       To make them "completely different colors", we can use huge hue-rotates 
-       or just simple colored filters. 
-       Let's try a cool sepia/hue shift 
-    */
-    filter: brightness(0.4) sepia(1) hue-rotate(180deg) saturate(3);
-}
-
-/* 
-  TEXT Z-INDEX EFFECT 
-  The text should feel like it's interacting with the layers 
-*/
+/* Text Overlay */
 .content {
-    position: absolute;
+    position: fixed;
+    /* Fixed so it stays centered regardless of grid size */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 50;
-    /* Above images */
     pointer-events: none;
-    /* Mouse passes through to images */
+    z-index: 100;
     mix-blend-mode: difference;
-    /* This creates that cool inverse color effect based on background */
 }
 
 h1 {
     font-size: 15vw;
-    /* Huge responsive text */
     color: white;
-    /* With difference blend mode, white becomes inverted of bg */
-    text-transform: lowercase;
     margin: 0;
     line-height: 0.8;
     letter-spacing: -10px;
