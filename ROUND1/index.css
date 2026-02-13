@@ -1,36 +1,109 @@
-.gallery {
-  --g: 8px; /* the gap */
-  
-  display: grid;
-  clip-path: inset(1px); /* to avoid visual glitchs */
-}
-.gallery > img {
-  --_p: calc(-1*var(--g));
-  grid-area: 1/1;
-  width: 350px; /* control the size */
-  aspect-ratio: 1;
-  cursor: pointer;
-  transition: .4s .1s;
-}
-.gallery > img:first-child {
-  clip-path: polygon(0 0, calc(100% + var(--_p)) 0 , 0 calc(100% + var(--_p)))
-}
-.gallery > img:last-child {
-  clip-path: polygon(100% 100%, 100% calc(0% - var(--_p)), calc(0% - var(--_p)) 100%)
-}
-.gallery:hover > img:last-child,
-.gallery:hover > img:first-child:hover{
-  --_p: calc(50% - var(--g));
-}
-.gallery:hover > img:first-child,
-.gallery:hover > img:first-child:hover + img{
-  --_p: calc(-50% - var(--g));
-}
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@800&display=swap');
 
 body {
-  margin: 0;
-  min-height: 100vh;
-  display: grid;
-  place-content: center;
-  background: #3FB8AF;
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    background: #000;
+    font-family: 'Outfit', sans-serif;
+}
+
+.gallery {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.gallery>img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.4s ease-out;
+    /* Smooth transition */
+    filter: brightness(0.6) saturate(0);
+    /* Start darker and black/white */
+    z-index: 10;
+}
+
+/* 
+  The 4-Part Split via Clip-Path 
+  This creates 4 distinct triangular/trapezoidal regions meeting at center
+*/
+/* Top Quadrant */
+.gallery>img:nth-child(1) {
+    clip-path: polygon(0 0, 100% 0, 50% 50%);
+}
+
+/* Right Quadrant */
+.gallery>img:nth-child(2) {
+    clip-path: polygon(100% 0, 100% 100%, 50% 50%);
+}
+
+/* Bottom Quadrant */
+.gallery>img:nth-child(3) {
+    clip-path: polygon(100% 100%, 0 100%, 50% 50%);
+}
+
+/* Left Quadrant */
+.gallery>img:nth-child(4) {
+    clip-path: polygon(0 100%, 0 0, 50% 50%);
+}
+
+
+/* 
+  HOVER EFFECT: COLOR CHANGE 
+  When you hover ONE image:
+  1. It becomes full color and bright.
+  2. The OTHERS shift to distinct solid colors (fake "different colors" effect with filters/overlays)
+*/
+
+/* The hovered image lights up */
+.gallery>img:hover {
+    filter: brightness(1.2) saturate(1.2);
+    z-index: 20;
+    /* Bring forward slightly if needed */
+    transform: scale(1.02);
+    /* Slight pop */
+}
+
+/* When hovering ANY image in .gallery, affect the NON-hovered siblings */
+.gallery:hover>img:not(:hover) {
+    /* 
+       To make them "completely different colors", we can use huge hue-rotates 
+       or just simple colored filters. 
+       Let's try a cool sepia/hue shift 
+    */
+    filter: brightness(0.4) sepia(1) hue-rotate(180deg) saturate(3);
+}
+
+/* 
+  TEXT Z-INDEX EFFECT 
+  The text should feel like it's interacting with the layers 
+*/
+.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 50;
+    /* Above images */
+    pointer-events: none;
+    /* Mouse passes through to images */
+    mix-blend-mode: difference;
+    /* This creates that cool inverse color effect based on background */
+}
+
+h1 {
+    font-size: 15vw;
+    /* Huge responsive text */
+    color: white;
+    /* With difference blend mode, white becomes inverted of bg */
+    text-transform: lowercase;
+    margin: 0;
+    line-height: 0.8;
+    letter-spacing: -10px;
 }
