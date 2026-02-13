@@ -622,6 +622,20 @@ footer {
 
 /* Responsive Media Queries */
 
+/* Global Fixes */
+html,
+body {
+    width: 100%;
+    overflow-x: hidden;
+    /* Prevent horizontal scroll */
+}
+
+/* Adjust grid min-width for better fluidity */
+.product-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
 /* Tablet & Smaller Laptops */
 @media (max-width: 1024px) {
     nav {
@@ -629,7 +643,7 @@ footer {
     }
 
     h1 {
-        font-size: 15vw;
+        font-size: 14vw;
     }
 
     .features {
@@ -638,6 +652,7 @@ footer {
 
     .feature-img-container {
         height: 50vh;
+        width: 100%;
     }
 
     .feature-text {
@@ -667,11 +682,10 @@ footer {
     nav {
         flex-direction: column;
         gap: 1.5rem;
-        padding: 1.5rem;
+        padding: 1.5rem 1rem;
         position: relative;
-        /* Change from absolute to relative on mobile for flow */
         background: var(--dark);
-        /* Solid background for readability */
+        text-align: center;
     }
 
     .menu {
@@ -682,13 +696,19 @@ footer {
 
     .menu a {
         margin: 0 0.5rem;
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 
     /* Hero Text */
+    .hero {
+        min-height: 100vh;
+        height: auto;
+        padding: 6rem 1rem 4rem 1rem;
+    }
+
     h1 {
         font-size: 18vw;
-        /* Larger relative to screen width */
+        line-height: 0.9;
     }
 
     .hero-content p {
@@ -700,6 +720,7 @@ footer {
         flex-direction: column;
         width: 100%;
         padding: 0 2rem;
+        gap: 1rem;
     }
 
     .cta-btn {
@@ -707,13 +728,19 @@ footer {
         justify-content: center;
     }
 
+    /* Marquee */
+    .marquee-content span {
+        font-size: 2.5rem;
+        margin-right: 2rem;
+    }
+
     /* Manifesto */
     .manifesto {
-        padding: 4rem 2rem;
+        padding: 4rem 1.5rem;
     }
 
     .manifesto-text {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
     }
 
     /* Section Headers */
@@ -734,14 +761,18 @@ footer {
     }
 
     /* Grids */
+    .catalog {
+        padding: 4rem 1.5rem;
+    }
+
     .product-grid {
         grid-template-columns: 1fr;
+        /* Single column on mobile */
         gap: 2rem;
     }
 
     .card-image {
         height: 350px;
-        /* Smaller height for mobile cards */
     }
 
     /* Video Parallax Mobile */
@@ -752,13 +783,13 @@ footer {
 
     .bg-video {
         min-width: 100%;
-        /* Override huge width on mobile to prevent extreme cropping */
         min-height: 100%;
         width: auto;
         height: auto;
-        /* Start center */
         left: 50%;
         top: 50%;
+        transform: translate(-50%, -50%);
+        /* Center it properly */
     }
 
     .video-overlay h2 {
@@ -767,6 +798,10 @@ footer {
     }
 
     /* Features */
+    .feature-text {
+        padding: 4rem 1.5rem;
+    }
+
     .feature-text h2 {
         font-size: 3rem;
     }
@@ -785,6 +820,10 @@ footer {
         gap: 1rem;
     }
 
+    .newsletter {
+        padding: 4rem 1.5rem;
+    }
+
     .newsletter h2 {
         font-size: 3rem;
     }
@@ -792,15 +831,23 @@ footer {
 
 /* Small Mobile */
 @media (max-width: 480px) {
+    h1 {
+        font-size: 20vw;
+    }
+
     .manifesto-text {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
     }
 
     .feature-icon {
-        font-size: 3rem;
+        font-size: 2.5rem;
     }
 
     .feature-text h2 {
         font-size: 2.5rem;
+    }
+
+    .card-image {
+        height: 280px;
     }
 }
